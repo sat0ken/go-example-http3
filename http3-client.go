@@ -7,19 +7,20 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 )
 
 func main() {
 
-	//w := os.Stdout
+	w := os.Stdout
 	r := http3.RoundTripper{
 		TLSClientConfig: &tls.Config{
-			MinVersion: tls.VersionTLS13,
-			MaxVersion: tls.VersionTLS13,
-			//KeyLogWriter: w,
+			MinVersion:   tls.VersionTLS13,
+			MaxVersion:   tls.VersionTLS13,
+			KeyLogWriter: w,
 		},
 	}
-	req, _ := http.NewRequest("GET", "https://quic.rocks:4433", nil)
+	req, _ := http.NewRequest("GET", "https://google.com", nil)
 
 	resp, err := r.RoundTrip(req)
 	if err != nil {
