@@ -20,8 +20,8 @@ func main() {
 	mux.Handle("/", http.HandlerFunc(HelloHTTP3Server))
 
 	w := os.Stdout
-
-	httpServer := http.Server{
+	
+	server := http3.Server{
 		Addr: "127.0.0.1:18443",
 		TLSConfig: &tls.Config{
 			MinVersion:   tls.VersionTLS13,
@@ -29,9 +29,6 @@ func main() {
 			KeyLogWriter: w,
 		},
 		Handler: mux,
-	}
-	server := http3.Server{
-		Server: &httpServer,
 	}
 
 	err := server.ListenAndServeTLS("./my-tls.pem", "./my-tls-key.pem")
